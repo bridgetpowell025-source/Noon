@@ -1,0 +1,101 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #e9f2ff;
+  color: #1a1a1a;
+}
+
+header {
+  background: #0a2e63;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: bold;
+}
+
+nav .highlight {
+  background: #4da3ff;
+  padding: 6px 10px;
+  border-radius: 5px;
+}
+
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+  background: #cfe2ff;
+}
+
+.btn {
+  background: #0a2e63;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+form {
+  width: 90%;
+  max-width: 380px;
+  margin: 40px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+input, button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+button {
+  background: #0a2e63;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.dashboard {
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  background: white;
+  margin-top: 25px;
+  border-radius: 8px;
+}
+
+.balance {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 12px 0;
+}
+
+.chart {
+  width: 100%;
+  height: 240px;
+  background: #d6e6ff;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+table {
+  width: 100%;
+  background: white;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #d3d3d3;
+  text-align: center;
+}

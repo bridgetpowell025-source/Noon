@@ -1,0 +1,136 @@
+// Default educational test account
+let users = JSON.parse(localStorage.getItem("nordicUsers")) || [
+  { email: "test@nordicchain.finance", pass: "Test1234", balance: 0 }
+];
+
+// Save to localStorage
+function saveUsers() {
+  localStorage.setItem("nordicUsers", JSON.stringify(users));
+}
+
+// Signup
+const signupForm = document.getElementById("signupForm");
+if (signupForm) {
+  signupForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+    let email = document.getElementById("signupEmail").value;
+    let pass = document.getElementById("signupPass").value;
+
+    users.push({ email, pass, balance: 0 });
+    saveUsers();
+    alert("Account created! You may now login.");
+    location.href = "login.html";
+  });
+}
+
+// Login
+const loginForm = document.getElementById("loginForm");
+if (loginForm) {
+  loginForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+    let email = document.getElementById("loginEmail").value;
+    let pass = document.getElementById("loginPass").value;
+
+    let user = users.find(u => u.email === email && u.pass === pass);
+    if (user) {
+      localStorage.setItem("nordicLogged", email);
+      location.href = "dashboard.html";
+    } else {
+      alert("Invalid login details.");
+    }
+  });
+}
+
+// Load logged-in user
+let loggedEmail = localStorage.getItem("nordicLogged");
+let currentUser = users.find(u => u.email === loggedEmail);
+
+if (document.getElementById("userBalance") && currentUser) {
+  document.getElementById("userBalance").innerText = currentUser.balance;
+
+  // Deposit function
+  window.deposit = function() {
+    let amt = parseFloat(document.getElementById("depositAmount").value);
+    if (!isNaN(amt) && amt > 0) {
+      currentUser.balance += amt;
+      saveUsers();
+      document.getElementById("userBalance").innerText = currentUser.balance.toFixed(2);
+      alert("Deposit successful!");
+      document.getElementById("depositAmount").value = "";
+    }
+  }
+
+addTransaction("Deposit", amount, "BTC", "Completed");
+
+  // Withdraw function
+  window.withdraw = function() {
+    let amt = parseFloat(document.getElementById("withdrawAmount").value);
+    if (!isNaN(amt) && amt > 0 && amt <= currentUser.balance) {
+      currentUser.balance -= amt;
+      saveUsers();
+      document.getElementById("userBalance").innerText = currentUser.balance.toFixed(2);
+      alert("Withdrawal successful!");
+      document.getElementById("withdrawAmount").value = "";
+    } else alert("Invalid amount or insufficient balance.");
+  }
+}
+
+addTransaction("Withdrawal", amount, "BTC", "Pending");
+
+// Logout
+window.logout = function() {
+  localStorage.removeItem("nordicLogged");
+  location.href = "login.html";
+}
+
+// Fake BTC chart
+function generateFakeBTC() {
+  const canvas = document.getElementById("btcCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  let data = [];
+  for (let i=0; i<50; i++) {
+    data.push(40000 + Math.random()*5000); // fake BTC prices
+  }
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.beginPath();
+  ctx.moveTo(0, canvas.height - (data[0]-40000)/5000*canvas.height);
+  for (let i=1;i<data.length;i++){
+    ctx.lineTo(i*8, canvas.height - (data[i]-40000)/5000*canvas.height);
+  }
+  ctx.strokeStyle = "#0a2e63";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
+setInterval(generateFakeBTC, 3000);
+
+// Load history into table
+function loadHistory(){
+  let history = JSON.parse(localStorage.getItem("txHistory")) || [];
+  let tbody = document.querySelector("#txTable tbody");
+  if (!tbody) return;
+
+  tbody.innerHTML = "";
+  history.forEach(tx => {
+    let tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${tx.type}</td>
+      <td>$${tx.amount.toFixed(2)}</td>
+      <td>${tx.coin}</td>
+      <td>${tx.status}</td>
+      <td>${tx.date}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+window.onload = loadHistory;
+
+// Save transaction to history
+function addTransaction(type, amount, coin, status = "Completed") {
+  let history = JSON.parse(localStorage.getItem("txHistory")) || [];
+  history.unshift({
+    type, amount, coin, status,
+    date: new Date().toLocaleString()
+  });
+  localStorage.setItem("txHistory", JSON.stringify(history));
+}

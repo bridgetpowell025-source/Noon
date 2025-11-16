@@ -1,0 +1,94 @@
+// Admin Credentials
+const adminEmail = "nordicchain@admin.com";
+const adminPass = "admin090!*";
+
+// Admin login
+function adminLogin(){
+  let email = document.getElementById("adminEmail").value;
+  let pass = document.getElementById("adminPass").value;
+  if (email === adminEmail && pass === adminPass) {
+    localStorage.setItem("adminLogged", "true");
+    location.href = "admin-dashboard.html";
+  } else {
+    alert("Invalid login");
+  }
+}
+
+// Check admin auth
+if (location.pathname.includes("admin-") && !location.pathname.includes("admin-login")) {
+  if (localStorage.getItem("adminLogged") !== "true") {
+    location.href = "admin-login.html";
+  }
+}
+
+// Logout
+function adminLogout(){
+  localStorage.removeItem("adminLogged");
+  location.href = "admin-login.html";
+}
+
+// Load users and allow adding funds
+function loadUsers(){
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  let tbody = document.querySelector("#userTable tbody");
+  if (!tbody) return;
+  tbody.innerHTML = "";
+  users.forEach((u,i)=>{
+    let tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${u.email}</td>
+      <td>$${u.balance.toFixed(2)}</td>
+      <td>
+        <input type="number" id="fund${i}" placeholder="Amount">
+        <button onclick="addFunds(${i})">Add</button>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// Add funds
+function addFunds(index){
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  let amount = parseFloat(document.getElementById("fund" + index).value);
+  if (!isNaN(amount) && amount > 0) {
+    users[index].balance += amount;
+    localStorage.setItem("users", JSON.stringify(users));
+    alert("Funds added!");
+    loadUsers();
+  } else {
+    alert("Invalid amount.");
+  }
+}
+
+window.onload = loadUsers;
+
+// Load history into table
+function loadHistory(){
+  let history = JSON.parse(localStorage.getItem("txHistory")) || [];
+  let tbody = document.querySelector("#txTable tbody");
+  if (!tbody) return;
+
+  tbody.innerHTML = "";
+  history.forEach(tx => {
+    let tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${tx.type}</td>
+      <td>$${tx.amount.toFixed(2)}</td>
+      <td>${tx.coin}</td>
+      <td>${tx.status}</td>
+      <td>${tx.date}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+window.onload = loadHistory;
+
+// Save transaction to history
+function addTransaction(type, amount, coin, status = "Completed") {
+  let history = JSON.parse(localStorage.getItem("txHistory")) || [];
+  history.unshift({
+    type, amount, coin, status,
+    date: new Date().toLocaleString()
+  });
+  localStorage.setItem("txHistory", JSON.stringify(history));
+}

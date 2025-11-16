@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Login - NordicChain Admin</title>
+  <link rel="stylesheet" href="admin-style.css">
+  <script src="admin-script.js" defer></script>
+</head>
+
+<body>
+  <div class="login-box">
+    <h2>Admin Login</h2>
+    <input type="email" id="adminEmail" placeholder="Admin Email">
+    <input type="password" id="adminPass" placeholder="Password">
+    <button onclick="adminLogin()">Login</button>
+  </div>
+</body>
+</html>

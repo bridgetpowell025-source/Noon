@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Transaction History - NordicChain Finance</title>
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+</head>
+
+<body>
+
+<header>
+  <h2>Transaction History</h2>
+  <nav>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="plans.html">Plans</a>
+    <a href="history.html" class="highlight">History</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </nav>
+</header>
+
+<div class="dashboard">
+  <h3>Past Deposits & Withdrawals</h3>
+
+  <table id="txTable">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Coin</th>
+        <th>Status</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+</div>
+
+</body>
+</html>

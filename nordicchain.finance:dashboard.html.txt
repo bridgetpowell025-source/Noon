@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard - NordicChain Finance</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+<header>
+  <h1>Dashboard</h1>
+  <nav>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="plans.html">Investment Plans</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About Us</a>
+    <a href="login.html" onclick="logout()">Logout</a>
+  </nav>
+</header>
+
+<div class="dashboard">
+  <h2>Welcome!</h2>
+  <div class="balance">
+    Balance: $<span id="userBalance">0</span>
+  </div>
+
+  <div>
+    <label>Deposit Amount: $</label>
+    <input type="number" id="depositAmount" min="1">
+    <button onclick="deposit()">Deposit</button>
+  </div>
+
+  <div>
+    <label>Withdraw Amount: $</label>
+    <input type="number" id="withdrawAmount" min="1">
+    <button onclick="withdraw()">Withdraw</button>
+  </div>
+
+  <div class="chart" id="btcChart">
+    <h3>Fake BTC Price Chart</h3>
+    <canvas id="btcCanvas" width="400" height="200"></canvas>
+  </div>
+</div>
+
+</body>
+</html>

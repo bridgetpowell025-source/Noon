@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Investment Plans - NordicChain Finance</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Investment Plans</h1>
+  <nav>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="plans.html">Investment Plans</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About Us</a>
+  </nav>
+</header>
+
+<div class="dashboard">
+  <h2>Our Educational Investment Plans</h2>
+  <ul>
+    <li><strong>Starter:</strong> $100 - $500</li>
+    <li><strong>Silver:</strong> $501 - $2000</li>
+    <li><strong>Gold:</strong> $2001 - $5000</li>
+    <li><strong>Platinum:</strong> $5001+</li>
+  </ul>
+</div>
+
+</body>
+</html>
